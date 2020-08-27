@@ -8,8 +8,8 @@ class FuzzyStringMatch:
         """
         returns the lev ratio, lev dist between two strings
         """
-        ratio =lev.ratio(input_string,correct_string)
-        distance=lev.distance(input_string,correct_string)
+        ratio    = lev.ratio(input_string,correct_string)
+        distance = lev.distance(input_string,correct_string)
 
         return ratio,distance
 
@@ -19,28 +19,23 @@ class FuzzyStringMatch:
         will attempt to find a match for a string
         INCOMPLETE
         """
+        orginal_input_String    = input_string
         ratio,original_distance = self.get_ratio_and_dist(input_string,correct_string)
-        distance = original_distance
-        print(ratio,distance)
+        distance                = original_distance
+        #print(ratio,distance)
 
-        if ratio < 1:
-            # not inital match
+        while distance > 0: #0=dist, 1=ratio correspond to perfect match
+            input_string,correct_string = input_string.lower(),correct_string.lower()
+            ratio, distance             = self.get_ratio_and_dist(input_string,correct_string)
 
-            while distance != 0:
-                input_string,correct_string = input_string.lower(),correct_string.lower()
-                ratio,distance = self.get_ratio_and_dist(input_string,correct_string)
+       #     print('no match found for: "{}"'.format(input_string))
 
-                print('no match found for: "{}"'.format(input_string))
-
-            else:
-                print('match found from {} fixes'.format(original_distance))
-        else:
-            print('initial match found!')
+        print('"{}" found as a match for "{}"'.format(correct_string,orginal_input_String))
 
 ########################################################################################
 
-correct_string = 'Correct String!'
-input_strings = ['correct string','correct String','Correct string','Correct String!']
+correct_string = 'Correct String'
+input_strings  = ['cORRECT string','correct String','Correct string','Correct String']
 
 for input_string in input_strings:
     FuzzyStringMatchInstance = FuzzyStringMatch()
